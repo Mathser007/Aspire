@@ -1,17 +1,48 @@
 import 'package:aspire/Homepage.dart';
 import 'package:aspire/main.dart';
+import 'package:email_otp/email_otp.dart';
 import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 
 class Verification extends StatefulWidget {
-  const Verification({Key? key}) : super(key: key);
+  final  String email;
+  const Verification({Key? key,required this.email});
 
   @override
   State<Verification> createState() => _VerificationState();
 }
 
 class _VerificationState extends State<Verification> {
+  OtpFieldController otp = OtpFieldController();
+  String valll="";
+  EmailOTP myauth = EmailOTP();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    myauth.setConfig(
+        appEmail: "akhilaku18@gmail.com",
+        appName: "Email OTP",
+        userEmail: widget.email,
+        otpLength: 4,
+        otpType: OTPType.digitsOnly
+    );
+    sendotp();
+  }
+  Future<void> sendotp() async {
+    if (await myauth.sendOTP() == true) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(
+        content: Text("OTP has been sent"),
+      ));
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(
+        content: Text("Oops, OTP send failed"),
+      ));
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -63,6 +94,7 @@ class _VerificationState extends State<Verification> {
               textFieldAlignment: MainAxisAlignment.spaceAround,
               fieldStyle: FieldStyle.box,
               onCompleted: (pin) {
+                valll=pin;
               },
             ),
           ),
@@ -71,18 +103,43 @@ class _VerificationState extends State<Verification> {
             child: SizedBox(
               height: 50,
               width: 500,
-              child: ElevatedButton(onPressed: (){
+              child: ElevatedButton(onPressed: () async {
+                  {
+                    if (await myauth.verifyOTP(otp:valll) == true) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(const SnackBar(
+                content: Text("OTP is verified"),
+                ));
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => Homepage()),
                 );
+                } else {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(const SnackBar(
+                content: Text("Invalid OTP"),
+                ));
+                }
+                }
               },
                   child: Text("Verify&Continue"),style: ElevatedButton.styleFrom(
     primary: Colors.green,)
               ),
             ),
           ),
-          TextButton(onPressed: (){},
+          TextButton(onPressed: () async {
+            if (await myauth.sendOTP() == true) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(const SnackBar(
+            content: Text("OTP has been sent"),
+            ));
+            } else {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(const SnackBar(
+            content: Text("Oops, OTP send failed"),
+            ));
+            }
+          },
               child: Text("Resend code",style: TextStyle(
                 fontWeight: FontWeight.w400,fontSize: 14
               ),))

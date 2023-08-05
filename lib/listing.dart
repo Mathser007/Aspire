@@ -10,6 +10,21 @@ class Listing extends StatefulWidget {
 
 class _ListingState extends State<Listing> {
   var _searchEdit =  TextEditingController();
+  late List images=[
+    "assets/nurse/1.jpg",
+    "assets/nurse/2.jpg",
+    "assets/nurse/3.jpg",
+    "assets/nurse/4.jpg",
+    "assets/nurse/5.jpg",
+    "assets/nurse/6.jpg",
+    "assets/nurse/7.jpg",
+    "assets/nurse/8.jpg",
+    "assets/nurse/9.jpg",
+    "assets/nurse/10.jpg",
+    "assets/nurse/11.jpg",
+    "assets/nurse/12.jpg",
+    "assets/nurse/13.jpg"
+  ];
 
   bool _isSearch = true;
   String _searchText = "";
@@ -59,6 +74,9 @@ class _ListingState extends State<Listing> {
       "Anna de Armas",
       "Scaralett",
       "Elizhabeth",
+      "Cindrella",
+      "Gwen",
+      "Mary Jane"
     ];
     setState(() {
       _socialListItems.sort();
@@ -83,39 +101,44 @@ class _ListingState extends State<Listing> {
 
   Widget _listView() {
     return  Flexible(
-      child:  ListView.builder(
-          itemCount: _socialListItems.length,
-          itemBuilder: (BuildContext context, int index) {
-            return
-              ListTile(
-                  leading: CircleAvatar(
-                    radius: 60,
-                    backgroundImage: AssetImage("assets/images/nurse.png"),
-                  ),
-                  isThreeLine: true,
-                  subtitle: Column(
-                    children: [
-                      Align(
-                          alignment:Alignment.topLeft,child: Text("${_socialListItems[index]}",style: TextStyle(fontSize: 14),)),
-                      Align(
-                          alignment: Alignment.topLeft,
-                          child: Text("Licensed Practical Nurse")),
-                      Align(
-                          alignment: Alignment.topLeft,
-                          child: Text("* 4.0 || Rs:-100/hr")),
-                    ],
-                  ),
-                  trailing:Icon(Icons.arrow_forward_ios_outlined,size: 14,),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Profile()),
-                    );
-                  }
+      child:  Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView.builder(
+            itemCount: _socialListItems.length,
+            itemBuilder: (BuildContext context, int index) {
+              return
+                Card(
+                  child: ListTile(
+                      leading: CircleAvatar(
+                        radius: 60,
+                        backgroundImage: AssetImage("${images[index]}"),
+                      ),
+                      isThreeLine: true,
+                      subtitle: Column(
+                        children: [
+                          Align(
+                              alignment:Alignment.topLeft,child: Text("${_socialListItems[index]}",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w400),)),
+                          Align(
+                              alignment: Alignment.topLeft,
+                              child: Text("Licensed Practical Nurse")),
+                        ],
+                      ),
+                      trailing:Padding(
+                        padding: const EdgeInsets.only(top:20),
+                        child: Icon(Icons.arrow_forward_ios_outlined,size: 14,),
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Profile()),
+                        );
+                      }
 
 
-              );
-          }),
+                  ),
+                );
+            }),
+      ),
     );
   }
 
@@ -146,33 +169,35 @@ class _ListingState extends State<Listing> {
       child:  ListView.builder(
           itemCount: searchListItems.length,
           itemBuilder: (BuildContext context, int index) {
-            return     ListTile(
-                leading: CircleAvatar(
-                  radius: 60,
-                  backgroundImage: AssetImage("assets/images/nurse.png"),
-                ),
-                isThreeLine: true,
-                subtitle: Column(
-                  children: [
-                    Align(
-                        alignment:Alignment.topLeft,child: Text("${searchListItems[index]}",style: TextStyle(fontSize: 14),)),
-                    Align(
-                        alignment: Alignment.topLeft,
-                        child: Text("Licensed Practical Nurse")),
-                    Align(
-                        alignment: Alignment.topLeft,
-                        child: Text("* 4.0 || Rs:-100/hr")),
-                  ],
-                ),
-                trailing:Icon(Icons.arrow_forward_ios_outlined,size: 14,),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Profile()),
-                  );
-                }
+            return     Card(
+              child: ListTile(
+                  leading: CircleAvatar(
+                    radius: 60,
+                    backgroundImage: AssetImage("${images[index]}"),
+                  ),
+                  isThreeLine: true,
+                  subtitle: Column(
+                    children: [
+                      Align(
+                          alignment:Alignment.topLeft,child: Text("${searchListItems[index]}",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w400),)),
+                      Align(
+                          alignment: Alignment.topLeft,
+                          child: Text("Licensed Practical Nurse")),
+                    ],
+                  ),
+                  trailing:Padding(
+                    padding: const EdgeInsets.only(top: 15),
+                    child: Icon(Icons.arrow_forward_ios_outlined,size: 14,),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Profile()),
+                    );
+                  }
 
 
+              ),
             );
           }),
     );
@@ -189,7 +214,7 @@ class _ListingState extends State<Listing> {
           context,
           MaterialPageRoute(builder: (context) => Homepage()),
         );
-      }, icon: Icon(Icons.arrow_back_outlined)),
+      }, icon: Icon(Icons.arrow_back_outlined,)),
     ),
 
             Padding(
@@ -202,16 +227,12 @@ class _ListingState extends State<Listing> {
 
 Row(
   children: [
-        Expanded(child: _searchBox()),
-    Padding(
-      padding: const EdgeInsets.only(left: 18.0),
-      child: SizedBox(
-              height: 50,
-              width: 50,
-              child: Icon(Icons.filter_list)
-          ),
-    ),
-    
+        Expanded(child: Padding(
+          padding: const EdgeInsets.only(left: 15,right: 15),
+          child: _searchBox(),
+        )),
+
+
   ],
 ),
                     _isSearch ? _listView() : _searchListView(),

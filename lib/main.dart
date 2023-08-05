@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:aspire/Verification.dart';
+import 'package:aspire/listing.dart';
+import 'package:aspire/support.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -25,6 +27,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  TextEditingController email = new TextEditingController();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -38,8 +41,8 @@ class _HomeState extends State<Home> {
               Padding(
                 padding: const EdgeInsets.only(top: 100),
                 child: Container(
-                  height: 120,
-                  width: 120,
+                  height: 140,
+                  width: 140,
                   decoration: BoxDecoration(
                     image:DecorationImage(
                       image: AssetImage("assets/images/logo.png"),
@@ -78,8 +81,9 @@ class _HomeState extends State<Home> {
                         padding: const EdgeInsets.only(top: 50,left: 20,right: 20),
                         child: SizedBox(
                           width: 500,
-                          height: 50,
+                          height: 70,
                           child: TextFormField(
+                            controller: email,
                             validator: (value) {
                         if (value == null || value.isEmpty) {
                         return 'Please enter Email';
@@ -99,7 +103,7 @@ class _HomeState extends State<Home> {
                     Padding(
                       padding: const EdgeInsets.only(top: 40,left: 20,right: 20),
                       child: SizedBox(
-                        height: 50,
+                        height: 60,
                         width: 500,
                         child: ElevatedButton(
                           onPressed: () {
@@ -110,7 +114,7 @@ class _HomeState extends State<Home> {
                               );
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) =>  Verification()),
+                                MaterialPageRoute(builder: (context) =>  Verification(email: email.text.toString())),
                               );
                             }
                           },

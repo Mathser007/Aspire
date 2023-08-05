@@ -42,280 +42,284 @@ class _Home1State extends State<Home1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:  Form(
-        key: _formkey,
-        child: ListView(
-            children: [
-          Padding(
-            padding: const EdgeInsets.only(top:40),
-            child: SizedBox(
-              width: 350,
-              height: 180,
-              child: Image.asset("assets/images/img.png"),
+      body:  SafeArea(
+        left: true,
+        right: true,
+        child: Form(
+          key: _formkey,
+          child: ListView(
+              children: [
+            Padding(
+              padding: const EdgeInsets.only(top:40),
+              child: SizedBox(
+                width: 350,
+                height: 180,
+                child: Image.asset("assets/images/img.png"),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Text(
-              "Make a Booking",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text(
+                "Make a Booking",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10,left: 15,right: 15),
-            child: SizedBox(
-              width: 350,
-              height: 60,
-              child: DropdownButton2(
-                hint: Text(
-                  'Select Services',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Theme.of(context).hintColor,
-                  ),
-                ),
-                items: items
-                    .map((item) => DropdownMenuItem<String>(
-                  value: item,
-                  child: Text(
-                    item,
-                    style: const TextStyle(
+            Padding(
+              padding: const EdgeInsets.only(top: 10,left: 15,right: 15),
+              child: SizedBox(
+                width: 350,
+                height: 60,
+                child: DropdownButton2(
+                  hint: Text(
+                    'Select Services',
+                    style: TextStyle(
                       fontSize: 14,
+                      color: Theme.of(context).hintColor,
                     ),
                   ),
-                ))
-                    .toList(),
-                value: selectedValue,
-                onChanged: (value) {
-                  setState(() {
-                    selectedValue = value as String;
-                  });
-                },
-                buttonStyleData: const ButtonStyleData(
-                  height: 40,
-                  width: 500,
-                ),
-                menuItemStyleData: const MenuItemStyleData(
-                  height: 40,
-                ),
-              ),
-            ),
-          ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  height: 50,
-                  width: 185,
-                  child: TextField(
-                    controller: dateinput, //editing controller of this TextField
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.calendar_today),
-                        enabledBorder: OutlineInputBorder(), //icon of text field
-                        labelText: "Start Date" //label text of field
-                    ),
-                    readOnly: true,
-                    onTap: () async {
-                      DateTime? pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(
-                              2000), //DateTime.now() - not to allow to choose before today.
-                          lastDate: DateTime(2101));
-
-                      if (pickedDate != null) {
-                        print(pickedDate);
-                        String formattedDate =
-                        DateFormat('yyyy-MM-dd').format(pickedDate);
-                        print(formattedDate);
-
-                        setState(() {
-                          dateinput.text = formattedDate;
-                        });
-                      } else {
-                        print("Date is not selected");
-                      }
-                    },
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  height: 50,
-                  width: 185,
-                  child: TextField(
-                    controller: dateoutput, //editing controller of this TextField
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.calendar_today),
-                        enabledBorder: OutlineInputBorder(), //icon of text field
-                        labelText: "End Date" //label text of field
-                    ),
-                    readOnly: true,
-                    onTap: () async {
-                      DateTime? pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(
-                              2000), //DateTime.now() - not to allow to choose before today.
-                          lastDate: DateTime(2101));
-
-                      if (pickedDate != null) {
-                        print(pickedDate);
-                        String formattedDate =
-                        DateFormat('yyyy-MM-dd').format(pickedDate);
-                        print(formattedDate);
-
-                        setState(() {
-                          dateoutput.text = formattedDate;
-                        });
-                      } else {
-                        print("Date is not selected");
-                      }
-                    },
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: abc,
-              decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.phone_android),
-                  enabledBorder: OutlineInputBorder(),
-                  labelText: "Contact Number"),
-              validator: (value) {
-                if (value!.length == 0) {
-                  return 'Enter a valid number';
-                }else if(value.length<10){
-                  return 'Enter a valid number';
-                }else
-                return null;
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: _name,
-              decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(), labelText: "Name"),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter a valid Name';
-                }
-                return null;
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: hij,
-              decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(),
-                  labelText: "House/Flat/Building Name"),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter House/Flat/Building Name';
-                }
-                return null;
-              },
-            ),
-          ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  height: 50,
-                  width: 185,
-                  child: TextFormField(
-                    controller: klm,
-                    decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(),
-                        labelText: "House Number"),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter House Number';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  height: 50,
-                  width: 185,
-                  child: TextFormField(
-                    controller: nop,
-                    decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(), labelText: "Pin Code"),
-                    validator: (value){
-                      return value!.length < 6 ? 'Enter a valid Pin Code' : null;
-                    },
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  height: 50,
-                  width: 185,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      abc.clear();
-                      def.clear();
-                      hij.clear();
-                      klm.clear();
-                      nop.clear();
-                      dateinput.clear();
-                      dateoutput.clear();
-                      _name.clear();
-                    },
+                  items: items
+                      .map((item) => DropdownMenuItem<String>(
+                    value: item,
                     child: Text(
-                      "Reset",
+                      item,
+                      style: const TextStyle(
+                        fontSize: 14,
+                      ),
                     ),
-                    style: ElevatedButton.styleFrom(primary: Colors.grey),
+                  ))
+                      .toList(),
+                  value: selectedValue,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedValue = value as String;
+                    });
+                  },
+                  buttonStyleData: const ButtonStyleData(
+                    height: 40,
+                    width: 500,
+                  ),
+                  menuItemStyleData: const MenuItemStyleData(
+                    height: 40,
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  height: 50,
-                  width: 185,
-                  child: ElevatedButton(
-                    onPressed: () {
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    height: 50,
+                    width: 185,
+                    child: TextField(
+                      controller: dateinput, //editing controller of this TextField
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.calendar_today),
+                          enabledBorder: OutlineInputBorder(), //icon of text field
+                          labelText: "Start Date" //label text of field
+                      ),
+                      readOnly: true,
+                      onTap: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(
+                                2000), //DateTime.now() - not to allow to choose before today.
+                            lastDate: DateTime(2101));
+
+                        if (pickedDate != null) {
+                          print(pickedDate);
+                          String formattedDate =
+                          DateFormat('yyyy-MM-dd').format(pickedDate);
+                          print(formattedDate);
+
+                          setState(() {
+                            dateinput.text = formattedDate;
+                          });
+                        } else {
+                          print("Date is not selected");
+                        }
+                      },
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    height: 50,
+                    width: 185,
+                    child: TextField(
+                      controller: dateoutput, //editing controller of this TextField
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.calendar_today),
+                          enabledBorder: OutlineInputBorder(), //icon of text field
+                          labelText: "End Date" //label text of field
+                      ),
+                      readOnly: true,
+                      onTap: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(
+                                2000), //DateTime.now() - not to allow to choose before today.
+                            lastDate: DateTime(2101));
+
+                        if (pickedDate != null) {
+                          print(pickedDate);
+                          String formattedDate =
+                          DateFormat('yyyy-MM-dd').format(pickedDate);
+                          print(formattedDate);
+
+                          setState(() {
+                            dateoutput.text = formattedDate;
+                          });
+                        } else {
+                          print("Date is not selected");
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                controller: abc,
+                decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.phone_android),
+                    enabledBorder: OutlineInputBorder(),
+                    labelText: "Contact Number"),
+                validator: (value) {
+                  if (value!.length == 0) {
+                    return 'Enter a valid number';
+                  }else if(value.length<10){
+                    return 'Enter a valid number';
+                  }else
+                  return null;
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                controller: _name,
+                decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(), labelText: "Name"),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a valid Name';
+                  }
+                  return null;
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                controller: hij,
+                decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(),
+                    labelText: "House/Flat/Building Name"),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter House/Flat/Building Name';
+                  }
+                  return null;
+                },
+              ),
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    height: 50,
+                    width: 185,
+                    child: TextFormField(
+                      controller: klm,
+                      decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(),
+                          labelText: "House Number"),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter House Number';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    height: 50,
+                    width: 185,
+                    child: TextFormField(
+                      controller: nop,
+                      decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(), labelText: "Pin Code"),
+                      validator: (value){
+                        return value!.length < 6 ? 'Enter a valid Pin Code' : null;
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    height: 50,
+                    width: 185,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        abc.clear();
+                        def.clear();
+                        hij.clear();
+                        klm.clear();
+                        nop.clear();
+                        dateinput.clear();
+                        dateoutput.clear();
+                        _name.clear();
+                      },
+                      child: Text(
+                        "Reset",
+                      ),
+                      style: ElevatedButton.styleFrom(primary: Colors.grey),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    height: 50,
+                    width: 185,
+                    child: ElevatedButton(
+                      onPressed: () {
     if (_formkey.currentState!.validate()) {
-      submitStudent(context);
+        submitStudent(context);
     ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(content: Text('Processing Data')),
 
     );}
 
-                    },
-                    child: Text(
-                      "Check Availability",
+                      },
+                      child: Text(
+                        "Check Availability",
+                      ),
+                      style: ElevatedButton.styleFrom(primary: Colors.green),
                     ),
-                    style: ElevatedButton.styleFrom(primary: Colors.green),
                   ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
 
 
-        ]),
+          ]),
+        ),
       ),
     );
   }

@@ -58,20 +58,33 @@ class _NurseState extends State<Nurse> {
       ),
       Column(
         children: [
-          Text("Anna",style: TextStyle(fontSize: 22,fontWeight: FontWeight.w500,color: Colors.blueGrey),),
-    Text("Annaben@gmail.com",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,color: Colors.blueGrey),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text("Anna",style: TextStyle(fontSize: 22,fontWeight: FontWeight.w500,color: Colors.blueGrey),),
+          ),
+    Padding(
+      padding: const EdgeInsets.only(top: 10,bottom: 20),
+      child: Text("Annaben@gmail.com",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,color: Colors.blueGrey),
+      ),
     ) ,
+        Text("91 Main Street",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,color: Colors.blueGrey),),
+    Text("London",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,color: Colors.blueGrey),),
+    Text("SW98 0MH",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,color: Colors.blueGrey),),
 
         Padding(
-          padding: const EdgeInsets.only(top:100),
-          child: ElevatedButton(onPressed: (){
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Aspire()),
-            );
-          }, child: Text("Logout"),style: ElevatedButton.styleFrom(
-            primary: Colors.green
-          ),),
+          padding: const EdgeInsets.only(top:50),
+          child: SizedBox(
+            width: 120,
+            height: 50,
+            child: ElevatedButton(onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Aspire()),
+              );
+            }, child: Text("Logout"),style: ElevatedButton.styleFrom(
+              primary: Colors.green
+            ),),
+          ),
         )
 
 
